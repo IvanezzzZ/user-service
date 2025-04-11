@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  nginx_user_service:
+    image: nginx:latest
+    ports:
+      - "8081:80"
+    volumes:
+      - ./:/var/www/
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    container_name: nginx_user_service
+    depends_on:
+      - php_user_service
+
+  php_user_service:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        UID: ${UID}
+        GID: ${GID}
+    volumes:
+      - ./:/var/www/
+    container_name: php_user_service
+    depends_on:
+      - db_user_service
+
+  db_user_service:
+    image: postgres:16
+    container_name: db_user_service
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: car_app_user_service_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
