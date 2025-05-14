@@ -14,13 +14,13 @@ class VerifyEmailController extends Controller
     public function verifyEmail(EmailVerificationRequest $request): JsonResponse
     {
         if ($request->user()->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email уже верифицирован'], 409);
+            return response()->json(['message' => __('messages.email_already_verified')], 409);
         }
 
         if ($request->user()->markEmailAsVerified()) {
             event(new Verified($request->user()));
         }
 
-        return response()->json(['message' => 'Email успешно верифицирован'], 200);
+        return response()->json(['message' => __('messages.email_successfully_verified')], 200);
     }
 }
