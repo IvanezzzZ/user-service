@@ -15,8 +15,7 @@ class AuthenticatedController extends Controller
 {
     public function createToken(LoginRequest $request): JsonResponse
     {
-        if (! Auth::attempt($request->only('email', 'password')))
-        {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
