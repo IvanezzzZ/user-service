@@ -12,8 +12,7 @@ class CheckAdmin
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (! auth()->user()->isAdmin())
-        {
+        if (! auth()->user()->isAdmin()) {
             return response()->json(['message' => 'You are not authorized to access this page'], 403);
         }
 
