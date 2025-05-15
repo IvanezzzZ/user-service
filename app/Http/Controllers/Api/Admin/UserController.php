@@ -35,6 +35,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return response()->json(['message' => __('messages.profile_deleted')], 200);
+        return response()->json(['message' => __('messages.profile_deleted')]);
     }
 }
