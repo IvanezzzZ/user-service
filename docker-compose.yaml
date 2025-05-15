@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   nginx_user_service:
     image: nginx:latest
@@ -36,9 +34,3 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
-
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "8025:8025"
-      - "1025:1025"
